@@ -5,7 +5,7 @@ SELECT
 FROM
     layoffs;
     
-    ---------------------------------------
+----------------------------------------------------------------------------------------------------------------
 
 CREATE TABLE layoffs_staging LIKE layoffs; -- creates a copy(duplicate) table of layoffs for not disturb the raw data 
 
@@ -76,7 +76,7 @@ insert into layoffs_staging2  select *,
 select company,trim(company) from layoffs_staging2;
 
 update  layoffs_staging2
-set company = trim(company);
+set company = trim(company); -- removed extra spaces
 
 select
 distinct industry from layoffs_staging2
@@ -84,7 +84,7 @@ order by 1;
 
 update layoffs_staging2 
 set industry = 'Crypto'
-where industry like 'Crypto%';
+where industry like 'Crypto%';  -- updated that have industry names same
 
 select
 distinct country,trim(trailing '.'from country) from layoffs_staging2
@@ -139,7 +139,7 @@ join layoffs_staging2 t2
 select * 
 from layoffs_staging2 
 where company like 'Bally%';
-
+-- retrived the null values
 SELECT 
     *
 FROM
@@ -147,6 +147,8 @@ FROM
 WHERE
     total_laid_off IS NULL
         AND percentage_laid_off IS NULL;
+
+-- deleted the null values
 
 DELETE FROM layoffs_staging2 
 WHERE
